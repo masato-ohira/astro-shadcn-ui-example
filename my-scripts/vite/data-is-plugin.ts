@@ -21,14 +21,12 @@ export const dataIsPlugin = () => {
           // インポートしたtsxコンポーネントのタグにdata-testid属性を追加する
           const componentId = split(id, '/').reverse()[0].replace('.tsx', '')
           const flag = `return /* @__PURE__ */ _jsx`
-          const blankTag = `return /* @__PURE__ */ _jsx(_Fragment`
-
           let codes = split(code, '\n')
 
-          if (code.includes(flag) && !code.includes(blankTag)) {
+          if (code.includes(flag)) {
             let count = 0
             map(codes, (i, key) => {
-              if (i.includes(flag)) {
+              if (i.includes(flag) && !i.includes('_Fragment')) {
                 count++
                 const dataId =
                   count > 1 ? `${componentId}_${count}` : componentId
